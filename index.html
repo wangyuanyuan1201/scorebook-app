@@ -40,4 +40,63 @@ function buildPrompt(){syncMatch();let issues=check();data.warnings=[...new Set(
 $('prompt').onclick=()=>{copy(buildPrompt())};$('save').onclick=()=>{syncMatch();data.warnings=[...new Set([...(data.warnings||[]),...check()])];download('scorebook_'+data.match_id+'.json',JSON.stringify(safeJSON(),null,2));status('JSON保存しました')};$('open').onclick=()=>$('fileInput').click();$('fileInput').onchange=async e=>{let f=e.target.files[0];if(f)importJSON(await f.text());e.target.value=''};$('pasteImport').onclick=()=>importJSON($('pasteJson').value);
 $('excel').onclick=()=>{syncMatch();let t=data.rows.map(r=>COLS.map(([k])=>{let v=MATCH_KEYS.includes(k)?data.match[k]:r[k];return v===null||v===undefined?'':String(v)}).join('\t')).join('\n');copy(t);status('18列のTSVをコピーしました。Excel/WPSのA2に貼り付けてください。')};
 $('reset').onclick=()=>{if(!confirm('現在の試合をリセットしますか？ 未保存の変更は失われます。'))return;data=fresh();selected=null;render();status('新しい試合を開始しました')};$('add').onclick=()=>{let r=rowNew();if(selected){let idx=data.rows.findIndex(x=>x.row_id===selected);let src=data.rows[idx];r.inning=src.inning;r.batting_order=src.batting_order;r.locked_fields=['inning','batting_order'];data.rows.splice(idx+1,0,r)}else data.rows.push(r);selected=r.row_id;render()};$('del').onclick=()=>{let r=data.rows.find(x=>x.row_id===selected);if(!r)return;if(!confirm('選択行を削除しますか？ 再取込でも復活しません。'))return;data.deleted_row_ids.push(r.row_id);data.rows=data.rows.filter(x=>x.row_id!==r.row_id);selected=data.rows[0]?.row_id||null;render()};$('confirm').onclick=()=>{if(!data.rows.length){alert('打席がありません');return}let issues=validateRoster();if(issues.length&&!confirm('名簿に未登録の名前があります。\n'+issues.slice(0,5).join('\n')+'\nこのまま確認済みにしますか？'))return;data.ui.confirmed=true;data.stage='detail';render()};$('unconfirm').onclick=()=>{data.ui.confirmed=false;data.stage='initial';render()};$('rosterSave').onclick=()=>{data.ui.roster=$('roster').value;let issues=validateRoster();data.warnings=[...new Set([...(data.warnings||[]),...issues])];render();status('正式名簿を保存しました')};MATCH_KEYS.forEach(k=>$(k==='class'?'className':k).addEventListener('change',syncMatch));render();status('準備完了。試合情報を入力し「チャッピーへ指示」を押してください。');
-</script></body></html>
+</script>
+
+<script>
+(() => {
+  const originalRenderEditor = renderEditor;
+
+  renderEditor = function () {
+    originalRenderEditor();
+
+    const root = document.getElementById('editor');
+    if (!root) return;
+
+    const names = [...new Set(
+      (data.ui?.roster || '')
+        .split('\n')
+        .map(s => s.trim())
+        .filter(Boolean)
+    )];
+
+    const inputs = root.querySelectorAll('input');
+
+    for (const input of inputs) {
+      const label = input.closest('label');
+      if (!label || !/打者（G）|打者\(G\)/.test(label.textContent)) continue;
+
+      const select = document.createElement('select');
+      const current = input.value;
+
+      const addOption = (value, title) => {
+        const option = document.createElement('option');
+        option.value = value;
+        option.textContent = title;
+        select.appendChild(option);
+      };
+
+      addOption('', '選手を選択');
+
+      if (current && !names.includes(current)) {
+        addOption(current, '⚠ 名簿外：' + current);
+      }
+
+      names.forEach(name => addOption(name, name));
+      select.value = current;
+
+      select.addEventListener('change', () => {
+        input.value = select.value;
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+      });
+
+      input.replaceWith(select);
+    }
+  };
+
+  renderEditor();
+})();
+</script>
+
+</body>
+</html>
