@@ -1,4 +1,25 @@
-<!doctype html><html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>2027 スコア判読準備 v31</title><style>*{box-sizing:border-box}html,body{margin:0;height:100%;overflow:hidden;overscroll-behavior:none;background:#17221d;color:white;font:14px system-ui;touch-action:none}body{display:flex;flex-direction:column;height:100dvh;padding:8px;gap:6px}button,label{font:inherit;background:white;color:#17221d;border:0;border-radius:6px;padding:10px}header,footer{display:flex;gap:5px;flex-wrap:wrap}canvas{width:100%;height:100%;display:block;touch-action:none}#stage{flex:1;min-height:0;position:relative}#loupe{position:absolute;right:5px;top:5px;width:110px;height:110px;border:2px solid white;pointer-events:none;display:none}p{margin:0}button:disabled{opacity:.4}</style><style>#review .compactStructure{min-width:540px}#review .compactStructure th:first-child,#review .compactStructure td:first-child{width:135px}#review .compactStructure th,#review .compactStructure td{width:44px;padding:2px}#review .compactStructure td:first-child b{font-size:11px}#review .compactStructure td:first-child select,#review .compactStructure td:first-child input{width:100%;font-size:13px;padding:3px;height:30px}#review .compactStructure button{min-height:28px;padding:3px}#review .compactStructure th input{width:100%;font-size:14px}</style><style>#review .changeTable{width:100%;table-layout:fixed;border-collapse:collapse}#review .changeTable th:first-child{width:8%}#review .changeTable th:nth-child(2){width:38%}#review .changeTable th:nth-child(3){width:20%}#review .changeTable th:nth-child(4){width:34%}#review .changeTable td,#review .changeTable th{padding:2px 3px;text-align:left}#review .changeTable select,#review .changeTable input{appearance:none;-webkit-appearance:none;border:1px solid #aab4ae;border-radius:2px;background:#fff;color:#17221d;width:100%;min-width:0;font-size:13px;height:32px;padding:3px 15px 3px 4px}#review .changeTable select{background-image:linear-gradient(45deg,transparent 50%,#17221d 50%),linear-gradient(135deg,#17221d 50%,transparent 50%);background-position:calc(100% - 9px) 13px,calc(100% - 5px) 13px;background-size:4px 4px;background-repeat:no-repeat}#review .changeTable .changeActions{padding:4px 2px 6px 8%;white-space:nowrap}#review .changeTable .changeActions button{border-radius:999px;font-size:12px;padding:6px 10px;margin:0 5px 0 0;min-height:30px}#review .changeTable .orderEnd td{padding-bottom:10px;border-bottom:1px solid #52635a}</style><style>
+<!doctype html><html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>2027 スコア判読準備 v32</title><style>*{box-sizing:border-box}html,body{margin:0;height:100%;overflow:hidden;overscroll-behavior:none;background:#17221d;color:white;font:14px system-ui;touch-action:none}body{display:flex;flex-direction:column;height:100dvh;padding:8px;gap:6px}button,label{font:inherit;background:white;color:#17221d;border:0;border-radius:6px;padding:10px}header,footer{display:flex;gap:5px;flex-wrap:wrap}canvas{width:100%;height:100%;display:block;touch-action:none}#stage{flex:1;min-height:0;position:relative}#loupe{position:absolute;right:5px;top:5px;width:110px;height:110px;border:2px solid white;pointer-events:none;display:none}p{margin:0}button:disabled{opacity:.4}
+#review .preview::before,#review .preview::after{content:"";position:absolute;pointer-events:none}
+#review .preview::before{left:16%;right:0;top:50%;border-top:1px dashed #999}
+#review .preview::after{left:58%;top:0;bottom:0;border-left:1px dashed #999;z-index:0}
+#review .preview .diamond{z-index:1;background:white;pointer-events:none}
+#review .preview .tapField{position:absolute;z-index:2;margin:0;padding:2px;border:0;border-radius:2px;background:transparent;color:inherit;font:inherit;line-height:1.08;overflow:auto;overflow-wrap:anywhere;display:flex;flex-direction:column;text-align:left}
+#review .preview .tapField[aria-pressed=true]{box-shadow:inset 0 0 0 2px #347853;background:rgba(91,162,114,.08)}
+#review .tapField[data-key^=upper]{top:0;height:34%;justify-content:flex-start}
+#review .tapField[data-key^=bottom]{bottom:0;height:28%;justify-content:flex-end}
+#review .tapField[data-key$=_left]{left:16%;width:42%;align-items:flex-start}
+#review .tapField[data-key$=_right]{right:0;width:42%;align-items:flex-end}
+#review .preview .tapField[data-key=center]{top:34%;height:32%;left:40%;width:36%;font-size:clamp(30px,9.5vw,50px);font-weight:bold;align-items:center;justify-content:center}
+#review .preview .tapField[data-key=total_bases]{right:0;bottom:28%;height:30%;width:24%;font-size:clamp(12px,3.2vw,17px);align-items:flex-end;justify-content:flex-end}
+#review .preview .tapField[data-key^=pitch]{left:0;width:16%;border-right:1px solid #aaa;border-radius:0;font-size:clamp(13px,3.6vw,18px)}
+#review .tapField[data-key=pitch_marks]{top:0;height:72%}
+#review .tapField[data-key=pitch_count]{bottom:0;height:28%;justify-content:flex-end}
+#review .singleField{margin:6px 0}
+#review .singleField label{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px;align-items:center}
+#review .singleField label input{grid-column:1;min-width:0;font-size:20px}
+#review .singleField select{max-width:100%}
+#review .singleField>[hidden],#review .bar[hidden]{display:none}
+</style><style>#review .compactStructure{min-width:540px}#review .compactStructure th:first-child,#review .compactStructure td:first-child{width:135px}#review .compactStructure th,#review .compactStructure td{width:44px;padding:2px}#review .compactStructure td:first-child b{font-size:11px}#review .compactStructure td:first-child select,#review .compactStructure td:first-child input{width:100%;font-size:13px;padding:3px;height:30px}#review .compactStructure button{min-height:28px;padding:3px}#review .compactStructure th input{width:100%;font-size:14px}</style><style>#review .changeTable{width:100%;table-layout:fixed;border-collapse:collapse}#review .changeTable th:first-child{width:8%}#review .changeTable th:nth-child(2){width:38%}#review .changeTable th:nth-child(3){width:20%}#review .changeTable th:nth-child(4){width:34%}#review .changeTable td,#review .changeTable th{padding:2px 3px;text-align:left}#review .changeTable select,#review .changeTable input{appearance:none;-webkit-appearance:none;border:1px solid #aab4ae;border-radius:2px;background:#fff;color:#17221d;width:100%;min-width:0;font-size:13px;height:32px;padding:3px 15px 3px 4px}#review .changeTable select{background-image:linear-gradient(45deg,transparent 50%,#17221d 50%),linear-gradient(135deg,#17221d 50%,transparent 50%);background-position:calc(100% - 9px) 13px,calc(100% - 5px) 13px;background-size:4px 4px;background-repeat:no-repeat}#review .changeTable .changeActions{padding:4px 2px 6px 8%;white-space:nowrap}#review .changeTable .changeActions button{border-radius:999px;font-size:12px;padding:6px 10px;margin:0 5px 0 0;min-height:30px}#review .changeTable .orderEnd td{padding-bottom:10px;border-bottom:1px solid #52635a}</style><style>
 body{padding-top:28px}
 body>section{top:22px!important}
 #appVersion{position:fixed;inset:0 0 auto;height:22px;background:#17221d;text-align:right;padding:2px 10px;color:white;font-size:13px;z-index:200;pointer-events:none}
@@ -119,7 +140,76 @@ function pitchMarkEditor(parent, draft, onEdit) {
  }
  render();
 }
-function editCell(row,col){R.hidden=false;resumeView={type:"cell",row,col};R.scrollTop=0;let d=result[side],c=d.cells.find(x=>x.row===row&&x.col===col),draft=structuredClone(c||{row,col,inning:col,colors:{}});draft.colors??={};if(restoredDraft){Object.assign(draft,restoredDraft);restoredDraft=null}activeDraft=draft;R.replaceChildren();let bar=el('div',undefined,R);bar.className='bar';btn(bar,'戻る',showReview);el('h3',(side==='upper'?'上段':'下段')+' '+row+'行 '+col+'列',R);el('p',progressText(),R);let compare=el('div',undefined,R);compare.className='compare';let left=el('div',undefined,compare);el('p','原本',left);let canvas=el('canvas',undefined,left);let right=el('div',undefined,compare);el('p','判読結果',right);let preview=el('div',undefined,right);preview.className='preview';function refreshPreview(){preview.replaceChildren();let diamond=el('div',undefined,preview);diamond.className='diamond';let bases=draft.total_bases==null||draft.total_bases===''?0:Number(draft.total_bases);for(let [j,edge] of ['Right','Top','Left','Bottom'].entries()){if(bases>=j+1)diamond.style['border'+edge]='3px solid #d00'}let pitch=el('span',undefined,preview);pitch.className='pitchPreview';el('b',String(draft.pitch_marks??''),pitch);el('b',String(draft.pitch_count??''),pitch);for(let [k,css] of Object.entries({upper_left:'left:20%;top:5%',upper_right:'right:4%;top:5%',bottom_left:'left:20%;bottom:5%',bottom_right:'right:4%;bottom:5%',center:'left:58%;top:50%;transform:translate(-50%,-50%);font-size:clamp(30px,9.5vw,50px);font-weight:bold;text-align:center'})){let t=el('span',draft[k]??'',preview);t.style.cssText=css+';color:'+({red:'#d00',blue:'#06c',black:'#111'}[draft.colors[k]]||'#111')}if(draft.total_bases!=null&&draft.total_bases!==''){let t=el('span','塁打 '+draft.total_bases,preview);t.style.cssText='right:4%;bottom:25%;font-size:clamp(13px,3.6vw,18px);color:#111'}}refreshPreview();let f=session[side].map(p=>({x:p.x*sourceImage.naturalWidth,y:p.y*sourceImage.naturalHeight}));let q=[project(f,(col-1)/9,(row-1)/10),project(f,col/9,(row-1)/10),project(f,col/9,row/10),project(f,(col-1)/9,row/10)];let x=Math.max(0,Math.floor(Math.min(...q.map(p=>p.x)))),y=Math.max(0,Math.floor(Math.min(...q.map(p=>p.y)))),ww=Math.min(sourceImage.naturalWidth-x,Math.ceil(Math.max(...q.map(p=>p.x)))-x),hh=Math.min(sourceImage.naturalHeight-y,Math.ceil(Math.max(...q.map(p=>p.y)))-y);canvas.width=ww;canvas.height=hh;preview.style.aspectRatio=ww+'/'+hh;let g=canvas.getContext('2d');g.drawImage(sourceImage,x,y,ww,hh,0,0,ww,hh);g.strokeStyle='#eab308';g.lineWidth=2;g.beginPath();q.forEach((p,i)=>i?g.lineTo(p.x-x,p.y-y):g.moveTo(p.x-x,p.y-y));g.closePath();g.stroke();let flds=el('div',undefined,R);flds.className='scoreFields';let active=null;for(let [k,t] of Object.entries({upper_left:'左上 2→3',upper_right:'右上 1→2',center:'中央 アウト・生還・残塁',bottom_left:'左下 3→本',bottom_right:'右下 打席結果',total_bases:'塁打',pitch_marks:'投球記号',pitch_count:'投球数',inning:'回'})){if(k==='pitch_marks'){pitchMarkEditor(flds,draft,()=>{active=null;refreshPreview()});continue}let i=field(flds,t,draft,k);if(k==='inning'&&result.detail_received)i.readOnly=true;i.parentNode.style.gridArea=k;i.onfocus=()=>active=i;let oldInput=i.oninput;i.oninput=()=>{oldInput();refreshPreview()};if(!active)active=i;if(['bottom_right','upper_right','upper_left','bottom_left','center'].includes(k)){let sel=el('select',undefined,i.parentNode);for(let color of ['black','red','blue'])sel.add(new Option({black:'黒',red:'赤',blue:'青'}[color],color));sel.value=draft.colors[k]||'black';sel.onchange=()=>{draft.colors[k]=sel.value;refreshPreview()}}}let keys=el('div',undefined,R);keys.className='bar';for(let k of ['1','2','3','4','5','6','7','8','9','-','K','Ⓚ','B','DB','FC','S','Ⅰ','Ⅱ','Ⅲ','○','ℓ','消去'])btn(keys,k,()=>{if(active){active.value=k==='消去'?'':active.value+k;active.dispatchEvent(new Event('input'))}});function commit(){activeDraft=null;for(let k of ['inning','pitch_count','total_bases'])if(draft[k]!==''&&draft[k]!=null)draft[k]=Number(draft[k]);draft.confirmed=true;draft.needs_review=false;draft.bases_pending=false;if(c)Object.assign(c,draft);else d.cells.push(draft)}let actions=el('div',undefined,R);actions.className='actions';btn(actions,'確認して戻る',()=>{commit();showReview()});let next=btn(actions,'OK・次へ',()=>{commit();nextPending();R.scrollTop=0});next.className='primary';if(c&&!result.detail_received)btn(R,'誤記入を削除',()=>{if(confirm('このマスを削除しますか？')){d.cells=d.cells.filter(v=>v!==c);showReview()}})}
+function editCell(row,col){R.hidden=false;resumeView={type:"cell",row,col};R.scrollTop=0;let d=result[side],c=d.cells.find(x=>x.row===row&&x.col===col),draft=structuredClone(c||{row,col,inning:col,colors:{}});draft.colors??={};if(restoredDraft){Object.assign(draft,restoredDraft);restoredDraft=null}activeDraft=draft;R.replaceChildren();let bar=el('div',undefined,R);bar.className='bar';btn(bar,'戻る',showReview);el('h3',(side==='upper'?'上段':'下段')+' '+row+'行 '+col+'列',R);el('p',progressText(),R);let compare=el('div',undefined,R);compare.className='compare';let left=el('div',undefined,compare);el('p','原本',left);let canvas=el('canvas',undefined,left);let right=el('div',undefined,compare);el('p','判読結果',right);let preview=el('div',undefined,right);preview.className='preview';
+const captions={upper_left:'左上 2→3',upper_right:'右上 1→2',center:'中央 アウト・生還・残塁',bottom_left:'左下 3→本',bottom_right:'右下 打席結果',total_bases:'塁打',pitch_marks:'投球記号',pitch_count:'投球数',inning:'回'};
+const scored=['upper_left','upper_right','bottom_left','bottom_right','center'];
+const targets={},groups={},inputs={};
+let selected='bottom_right';
+const diamond=el('div',undefined,preview);
+diamond.className='diamond';
+for(const key of Object.keys(captions).filter(k=>k!=='inning')){
+ const button=btn(preview,'',()=>selectField(key));
+ button.className='tapField';
+ button.dataset.key=key;
+ targets[key]=button;
+}
+function refreshPreview(){
+ const bases=Number(draft.total_bases)||0;
+ ['Right','Top','Left','Bottom'].forEach((edge,i)=>diamond.style['border'+edge]=i<bases?'3px solid #d00':'');
+ for(const [key,button] of Object.entries(targets)){
+  const value=draft[key]??'';
+  button.textContent=key==='total_bases'?'塁打 '+(value===''?'？':value):String(value);
+  button.style.color=({red:'#d00',blue:'#06c'})[draft.colors[key]]||'#111';
+  button.setAttribute('aria-label',captions[key]+' '+(value===''?'空欄':value)+'を編集');
+  button.setAttribute('aria-pressed',String(key===selected));
+ }
+}
+let f=session[side].map(p=>({x:p.x*sourceImage.naturalWidth,y:p.y*sourceImage.naturalHeight}));let q=[project(f,(col-1)/9,(row-1)/10),project(f,col/9,(row-1)/10),project(f,col/9,row/10),project(f,(col-1)/9,row/10)];let x=Math.max(0,Math.floor(Math.min(...q.map(p=>p.x)))),y=Math.max(0,Math.floor(Math.min(...q.map(p=>p.y)))),ww=Math.min(sourceImage.naturalWidth-x,Math.ceil(Math.max(...q.map(p=>p.x)))-x),hh=Math.min(sourceImage.naturalHeight-y,Math.ceil(Math.max(...q.map(p=>p.y)))-y);canvas.width=ww;canvas.height=hh;preview.style.aspectRatio=ww+'/'+hh;let g=canvas.getContext('2d');g.drawImage(sourceImage,x,y,ww,hh,0,0,ww,hh);g.strokeStyle='#eab308';g.lineWidth=2;g.beginPath();q.forEach((p,i)=>i?g.lineTo(p.x-x,p.y-y):g.moveTo(p.x-x,p.y-y));g.closePath();g.stroke();
+const picker=el('select',undefined,R);
+picker.setAttribute('aria-label','編集する項目');
+const flds=el('div',undefined,R);
+flds.className='singleField';
+for(const [key,label] of Object.entries(captions)){
+ picker.add(new Option(label,key));
+ if(key==='pitch_marks'){
+  pitchMarkEditor(flds,draft,refreshPreview);
+  groups[key]=flds.lastElementChild;
+  continue;
+ }
+ const input=field(flds,label,draft,key);
+ inputs[key]=input;
+ groups[key]=input.parentNode;
+ input.readOnly=key==='inning'&&result.detail_received;
+ if(['total_bases','pitch_count','inning'].includes(key))input.inputMode='numeric';
+ input.oninput=()=>{draft[key]=input.value;refreshPreview()};
+ if(scored.includes(key)){
+  const color=el('select',undefined,groups[key]);
+  color.setAttribute('aria-label',label+'の色');
+  for(const [v,name] of Object.entries({black:'黒',red:'赤',blue:'青'}))color.add(new Option(name,v));
+  color.value=draft.colors[key]||'black';
+  color.onchange=()=>{draft.colors[key]=color.value;refreshPreview()};
+ }
+}
+const keys=el('div',undefined,R);
+keys.className='bar';
+function selectField(key){
+ selected=key;picker.value=key;
+ for(const [name,group] of Object.entries(groups))group.hidden=name!==key;
+ keys.replaceChildren();
+ const symbols=key==='center'?['Ⅰ','Ⅱ','Ⅲ','○','ℓ','消去']:
+  key==='total_bases'?['0','1','2','3','4','消去']:
+  scored.includes(key)?['1','2','3','4','5','6','7','8','9','-','K','Ⓚ','B','DB','FC','S','Ⅰ','Ⅱ','Ⅲ','○','ℓ','消去']:[];
+ keys.hidden=!symbols.length;
+ for(const symbol of symbols)btn(keys,symbol,()=>{
+  const input=inputs[key];
+  input.value=symbol==='消去'?'':key==='center'||key==='total_bases'?symbol:input.value+symbol;
+  input.dispatchEvent(new Event('input',{bubbles:true}));
+ });
+ refreshPreview();
+}
+picker.onchange=()=>selectField(picker.value);
+selectField(selected);
+function commit(){activeDraft=null;for(let k of ['inning','pitch_count','total_bases'])if(draft[k]!==''&&draft[k]!=null)draft[k]=Number(draft[k]);draft.confirmed=true;draft.needs_review=false;draft.bases_pending=false;if(c)Object.assign(c,draft);else d.cells.push(draft)}let actions=el('div',undefined,R);actions.className='actions';btn(actions,'確認して戻る',()=>{commit();showReview()});let next=btn(actions,'OK・次へ',()=>{commit();nextPending();R.scrollTop=0});next.className='primary';if(c&&!result.detail_received)btn(R,'誤記入を削除',()=>{if(confirm('このマスを削除しますか？')){d.cells=d.cells.filter(v=>v!==c);showReview()}})}
 function exportResult(){if(parkedCell){alert('編集中の打席を④詳細で確認してください');return}let pending=['upper','lower'].reduce((n,k)=>n+result[k].cells.filter(c=>!c.confirmed).length,0);if(['upper','lower'].some(k=>result[k].cells.some(c=>c.bases_pending))){alert('追加塁打を確認してください');return}if(pending){alert('未確認の記入マスが '+pending+' 件あります');return}if(!confirm('試合情報・選手情報・上下の空欄も確認済みですか？'))return;result.status='confirmed';let b=new Blob([JSON.stringify(result,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),a=el('a',undefined,document.body);a.href=u;a.download='scorebook_'+session.match_id.slice(0,8)+'_confirmed.json';a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),30000)}
 
 let gameKey=null,originalCache=null,resumeView={type:'position'},activeDraft=null,restoredDraft=null,restoring=false,saveTimer=null,saveQueue=Promise.resolve();
